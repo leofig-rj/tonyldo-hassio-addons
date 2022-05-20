@@ -8,5 +8,5 @@ build_from:
 labels:
   org.opencontainers.image.title: "Home Assistant Add-on: TTlock2MQTT"
   org.opencontainers.image.description: "Connection between TTLock devices with Home Assistant using MQTT."
-  org.opencontainers.image.source: "https://github.com/tonyldo/tonyldo-hassio-addons"
+  org.opencontainers.image.source: "https://github.com/leofig-rj/tonyldo-hassio-addons"
   org.opencontainers.image.licenses: "Apache License 2.0"
