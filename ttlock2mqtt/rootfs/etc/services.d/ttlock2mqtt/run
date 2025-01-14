@@ -7,11 +7,9 @@
 # Declare variables
 declare ttlockclientid
 declare ttlocktoken
-
 declare ttlockclientsecret
 declare ttlockuser
 declare ttlockpassword
-
 declare publishstatedelay
 declare publishbatterydelay
 declare loglevel
