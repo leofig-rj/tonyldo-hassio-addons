@@ -21,7 +21,7 @@ options:
   ttlockclientid: "TTLOCK CLOUD CLIENT ID"
   ttlockclientsecret: "TTLOCK CLOUD CLIENT SECRET"
   ttlockuser: "TTLOCK CLOUD USER"
-  ttlockpassword: "TTLOCK CLOUD PASSWORD"
+  ttlockhash: "TTLOCK CLOUD HASH"
   publishstatedelay: 60
   publishbatterydelay: 300
   loglevel: "INFO"
@@ -29,7 +29,7 @@ schema:
   ttlockclientid: "str"
   ttlockclientsecret: "str"
   ttlockuser: "str"
-  ttlockpassword: "str"
+  ttlockhash: "str"
   publishstatedelay: "int?"
   publishbatterydelay: "int?"
   loglevel: "list(DEBUG|INFO|WARNING|ERROR)?"

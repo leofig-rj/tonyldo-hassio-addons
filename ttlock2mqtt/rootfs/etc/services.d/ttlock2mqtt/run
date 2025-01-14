@@ -8,7 +8,7 @@
 declare ttlockclientid
 declare ttlockclientsecret
 declare ttlockuser
-declare ttlockpassword
+declare ttlockhash
 declare publishstatedelay
 declare publishbatterydelay
 declare loglevel
@@ -22,7 +22,7 @@ declare mqttbrokerpass
 ttlockclientid=$(bashio::config 'ttlockclientid')
 ttlockclientsecret=$(bashio::config 'ttlockclientsecret')
 ttlockuser=$(bashio::config 'ttlockuser')
-ttlockpassword=$(bashio::config 'ttlockpassword')
+ttlockhash=$(bashio::config 'ttlockhash')
 publishstatedelay=$(bashio::config 'publishstatedelay')
 publishbatterydelay=$(bashio::config 'publishbatterydelay')
 loglevel=$(bashio::config 'loglevel')
@@ -38,4 +38,4 @@ mqttbrokerpass=$(bashio::services mqtt "password")
 bashio::log.info "Run application..."
 
 # Run application
-exec python3 /usr/bin/ttlock_adapter.py --client=${ttlockclientid} --secrete=${ttlockclientsecret} --ttusr=${ttlockuser} --Ttpsw=${ttlockpassword} --broker=${mqttbrokerhost} --port=${mqttbrokerport} --user=${mqttbrokeruser} --Pass=${mqttbrokerpass} --State_delay=${publishstatedelay} --Battery_delay=${publishbatterydelay} --log_level=${loglevel} --Max_threads=${maxthreads}
+exec python3 /usr/bin/ttlock_adapter.py --client=${ttlockclientid} --secrete=${ttlockclientsecret} --User_tt=${ttlockuser} --hash=${ttlockhash} --broker=${mqttbrokerhost} --port=${mqttbrokerport} --user=${mqttbrokeruser} --Pass=${mqttbrokerpass} --State_delay=${publishstatedelay} --Battery_delay=${publishbatterydelay} --log_level=${loglevel} --Max_threads=${maxthreads}
