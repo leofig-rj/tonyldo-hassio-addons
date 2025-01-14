@@ -322,6 +322,9 @@ def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, tt
 
         if not ttlock_secret or not ttlock_user or not ttlock_pass:
             raise ValueError('Invalid ttlock secret or user or psw.')
+        
+        xxx = TTLock.get_token(ttlock_client,ttlock_secret,ttlock_user,ttlock_pass,"",hashed_password=True)
+        logging.info(xxx)
 
         logging.debug("Starting main loop...")
         while True:
