@@ -5,7 +5,7 @@ import concurrent.futures
 import getopt
 import sys
 import logging
-from ttlockwrapper import TTLock, TTlockAPIError, constants
+from ttlockwrapper import TTLock, constants
 
 DELAY_BETWEEN_NEW_THREADS_CREATION = 60
 DELAY_BETWEEN_LOCK_PUBLISH_INFOS = 60
