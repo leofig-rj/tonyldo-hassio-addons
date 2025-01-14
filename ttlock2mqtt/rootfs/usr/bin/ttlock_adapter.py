@@ -312,7 +312,7 @@ def createClients(broker, port, broker_user, broker_pass, ttlock_client, ttlock_
             create_futures(lock.get(constants.LOCK_ID_FIELD),ttlock2MqttClient)
 
 
-def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token,state_delay,battery_delay,max_threads):
+def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, ttlock_secret, ttlock_user, ttlock_pass, state_delay, battery_delay, max_threads):
     try:
         global executor
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=max_threads)
@@ -320,11 +320,14 @@ def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token,sta
         if not ttlock_client or not ttlock_token:
             raise ValueError('Invalid ttlock client or token.')
 
+        if not ttlock_secret or not ttlock_user or not ttlock_pass:
+            raise ValueError('Invalid ttlock secret or user or psw.')
+
         logging.debug("Starting main loop...")
         while True:
             try:
                 createClients(broker, port, broker_user, broker_pass,
-                              ttlock_client, ttlock_token,state_delay,battery_delay)
+                              ttlock_client, ttlock_token, state_delay, battery_delay)
                 logging.info("Current threads: {}".format(
                     threading.active_count()))
             except Exception as e:
@@ -351,15 +354,19 @@ if __name__ == '__main__':
     broker_pass = None
     ttlock_client = None
     ttlock_token = None
+    ttlock_secret = None
+    ttlock_user = None
+    ttlock_pass = None
     state_delay = DELAY_BETWEEN_LOCK_PUBLISH_INFOS
     battery_delay = DELAY_BETWEEN_LOCK_PUBLISH_INFOS*5
     loglevel = 'INFO'
     max_threads= 200
     full_cmd_arguments = sys.argv
     argument_list = full_cmd_arguments[1:]
-    short_options = 'b:p:u:P:c:t:l:S:B:M'
+    short_options = 'b:p:u:P:c:t:s:T:W:l:S:B:M'
     long_options = ['broker=', 'port=', 'user=',
                     'Pass=', 'client=', 'token=',
+                    'secrete=', 'Ttusr=', 'ttpsW=',
                     'log_level=', 'State_delay=','Battery_delay=',
                     'Max_threads=']
     try:
@@ -383,6 +390,14 @@ if __name__ == '__main__':
             ttlock_client = current_value
         elif current_argument in ("-t", "--token"):
             ttlock_token = current_value
+
+        elif current_argument in ("-s", "--secrete"):
+            ttlock_secret = current_value
+        elif current_argument in ("-T", "--Ttusr"):
+            ttlock_user = current_value
+        elif current_argument in ("-W", "--ttpsW"):
+            ttlock_pass = current_value
+
         elif current_argument in ("-l", "--log_level"):
             loglevel = current_value
         elif current_argument in ("-S", "--State_delay"):
@@ -399,6 +414,6 @@ if __name__ == '__main__':
     logging.basicConfig(level=numeric_level, datefmt='%Y-%m-%d %H:%M:%S',
                         format='%(asctime)-15s - [%(levelname)s] TTLOCK2MQTT: %(message)s', )
 
-    logging.debug("Options: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(
-        ttlock_client, ttlock_token, broker, port, broker_user, broker_pass, loglevel, state_delay, battery_delay, max_threads))
-    main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, state_delay ,battery_delay, max_threads)
+    logging.debug("Options: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(
+        ttlock_client, ttlock_token, ttlock_secret, ttlock_user, ttlock_pass, broker, port, broker_user, broker_pass, loglevel, state_delay, battery_delay, max_threads))
+    main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, ttlock_secret, ttlock_user, ttlock_pass, state_delay ,battery_delay, max_threads)

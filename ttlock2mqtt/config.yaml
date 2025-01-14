@@ -20,12 +20,18 @@ map:
 options:
   ttlockclientid: "TTLOCK CLOUD CLIENT ID"
   ttlocktoken: "TTLOCK CLOUD TOKEN"
+  ttlockclientsecret: "TTLOCK CLOUD CLIENT SECRET"
+  ttlockuser: "TTLOCK CLOUD USER"
+  ttlockpassword: "TTLOCK CLOUD PASSWORD"
   publishstatedelay: 60
   publishbatterydelay: 300
   loglevel: "INFO"
 schema:
   ttlockclientid: "str"
   ttlocktoken: "str"
+  ttlockclientsecret: "str"
+  ttlockuser: "str"
+  ttlockpassword: "str"
   publishstatedelay: "int?"
   publishbatterydelay: "int?"
   loglevel: "list(DEBUG|INFO|WARNING|ERROR)?"
