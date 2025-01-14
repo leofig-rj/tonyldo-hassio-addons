@@ -21,15 +21,17 @@ Example add-on configuration:
 
 ```yaml
 ttlockclientid: YOUR_TTLOCK_CLOUD_API_CLIENT_ID
-ttlocktoken: YOUR_TTLOCK_CLOUD_API_TOKEN
+ttlockclientsecret: YOUR_TTLOCK_CLOUD_CLIENT_SECRET
+ttlockuser: YOUR_TTLOCK_CLOUD_USER
+ttlockpassword: YOUR_TTLOCK_CLOUD_PASSWORD
 publishbatterydelay: 300
 publishstatedelay: 60
 loglevel: INFO
 maxthreads: 200
 ```
-### Options: `ttlockclientid` and `ttlocktoken`
+### Options: `ttlockclientid`,  `ttlockclientsecret`,  `ttlockuser` and `ttlockpassword` 
 
-Follow this intructions to get your `YOUR_TTLOCK_CLOUD_API_CLIENT_ID` and `YOUR_TTLOCK_CLOUD_API_TOKEN`
+Follow this intructions to get your `YOUR_TTLOCK_CLOUD_API_CLIENT_ID`, `YOUR_TTLOCK_CLOUD_CLIENT_SECRET`, `YOUR_TTLOCK_CLOUD_USER` and , `YOUR_TTLOCK_CLOUD_PASSWORD`
 https://github.com/tonyldo/ttlockio
 
 ### Option: `loglevel`
