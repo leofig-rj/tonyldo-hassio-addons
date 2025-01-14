@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8
+- Updated requirements and changed the credentials to obtain the token dynamically (by [leofig-rj][github_leofig-rj]).
+
 ## 0.5
 - A restructuring was made to adapt the docker base image to the S6-Overlay 3.x update and some new features such as obtaining the mqtt configuration via service (by [leofig-rj][github_leofig-rj]).
 
