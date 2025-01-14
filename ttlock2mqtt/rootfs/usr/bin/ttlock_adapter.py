@@ -300,7 +300,7 @@ def create_futures(id,client):
         client_futures[id] = executor.submit(client_loop, client)
     time.sleep(DELAY_BETWEEN_NEW_THREADS_CREATION)
 
-def createClients(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token,state_delay,battery_delay):
+def createClients(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, state_delay, battery_delay):
     ttlock = TTLock(ttlock_client, ttlock_token)
     ttlock2MqttClient = None
     for gateway in ttlock.get_gateway_generator():
@@ -324,15 +324,15 @@ def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, tt
             raise ValueError('Invalid ttlock secret or user or psw.')
         
         result = TTLock.get_token(ttlock_client,ttlock_secret,ttlock_user,ttlock_pass,"",hashed_password=True)
-        logging.info(result)
-        meu_token = result["access_token"]
-        logging.info("Meu Token: {}, Token Inicial: {}".format(meu_token, ttlock_token))
+        logging.debug(result)
+        result_token = result["access_token"]
+        logging.debug("Meu Token: {}, Token Inicial: {}".format(result_token, ttlock_token))
         
         logging.debug("Starting main loop...")
         while True:
             try:
                 createClients(broker, port, broker_user, broker_pass,
-                              ttlock_client, ttlock_token, state_delay, battery_delay)
+                              ttlock_client, result_token, state_delay, battery_delay)
                 logging.info("Current threads: {}".format(
                     threading.active_count()))
             except Exception as e:
