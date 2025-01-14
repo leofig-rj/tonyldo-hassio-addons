@@ -16,4 +16,4 @@ https://github.com/leofig-rj/tonyldo-hassio-addons
 [README](https://github.com/leofig-rj/tonyldo-hassio-addons/blob/master/ttlock2mqtt/README.md).
 
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-development%20beta-red.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2022.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
