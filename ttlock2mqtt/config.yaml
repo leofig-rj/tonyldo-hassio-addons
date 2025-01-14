@@ -19,7 +19,6 @@ map:
   - share:rw
 options:
   ttlockclientid: "TTLOCK CLOUD CLIENT ID"
-  ttlocktoken: "TTLOCK CLOUD TOKEN"
   ttlockclientsecret: "TTLOCK CLOUD CLIENT SECRET"
   ttlockuser: "TTLOCK CLOUD USER"
   ttlockpassword: "TTLOCK CLOUD PASSWORD"
@@ -28,7 +27,6 @@ options:
   loglevel: "INFO"
 schema:
   ttlockclientid: "str"
-  ttlocktoken: "str"
   ttlockclientsecret: "str"
   ttlockuser: "str"
   ttlockpassword: "str"
