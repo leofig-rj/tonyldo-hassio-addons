@@ -282,7 +282,7 @@ def client_loop(ttlock2MqttClient, loop_delay=2.0, run_forever=False):
         if ttlock2MqttClient.connected_flag:
             ttlock2MqttClient.disconnect()
 
-    except Exception as e:
+    except Exception:
         logging.exception("Client {} Loop Thread Error ".format(
             ttlock2MqttClient.mqttClientId))
 
@@ -335,7 +335,7 @@ def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, t
                               ttlock_client, result_token, state_delay, battery_delay)
                 logging.info("Current threads: {}".format(
                     threading.active_count()))
-            except Exception as e:
+            except Exception:
                 logging.exception("Error main method")
                 time.sleep(DELAY_BETWEEN_NEW_THREADS_CREATION)
 
@@ -346,7 +346,7 @@ def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, t
         for id, future in client_futures.items():
             logging.info("Client {} thread is over!".format(
                 future.result().mqttClientId))
-    except ValueError as e:
+    except ValueError:
         logging.exception('Exiting script...')
 
 def isEmptyStr(s):
@@ -376,7 +376,7 @@ if __name__ == '__main__':
     try:
         arguments, values = getopt.getopt(
             argument_list, short_options, long_options)
-    except getopt.error as e:
+    except getopt.error:
         raise ValueError('Invalid parameters!')
 
     for current_argument, current_value in arguments:
