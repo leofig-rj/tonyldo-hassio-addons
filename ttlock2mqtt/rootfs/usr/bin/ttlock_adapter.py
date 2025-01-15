@@ -394,7 +394,7 @@ if __name__ == '__main__':
             ttlock_client = current_value
         elif current_argument in ("-s", "--secrete"):
             ttlock_secret = current_value
-        elif current_argument in ("-U", "--Usr_tt"):
+        elif current_argument in ("-U", "--User_tt"):
             ttlock_user = current_value
         elif current_argument in ("-h", "--hash"):
             ttlock_hash = current_value
