@@ -23,6 +23,7 @@ options:
   ttlockuser: "TTLOCK CLOUD USER"
   ttlockhash: "TTLOCK CLOUD HASH"
   publishstatedelay: 60
+  publishstatedelayshort: 15
   publishbatterydelay: 300
   loglevel: "INFO"
 schema:
@@ -31,6 +32,7 @@ schema:
   ttlockuser: "str"
   ttlockhash: "str"
   publishstatedelay: "int?"
+  publishstatedelayshort: "int?"
   publishbatterydelay: "int?"
   loglevel: "list(DEBUG|INFO|WARNING|ERROR)?"
   maxthreads: "int?"

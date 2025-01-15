@@ -17,6 +17,10 @@ https://github.com/home-assistant/hassio-addons/tree/master/mosquitto
 
 **Note**: _Remember to restart the add-on when the configuration is changed._
 
+publishstatedelay is the delay in the standby loop.
+publishstatedelayshort is the delay after a command.
+publishstatedelayshort must be less than publishstatedelay.
+
 Example add-on configuration:
 
 ```yaml
@@ -24,8 +28,9 @@ ttlockclientid: YOUR_TTLOCK_CLOUD_API_CLIENT_ID
 ttlockclientsecret: YOUR_TTLOCK_CLOUD_CLIENT_SECRET
 ttlockuser: YOUR_TTLOCK_CLOUD_USER
 ttlockhash: YOUR_TTLOCK_CLOUD_HASH
-publishbatterydelay: 300
 publishstatedelay: 60
+publishstatedelayshort: 15
+publishbatterydelay: 300
 loglevel: INFO
 maxthreads: 200
 ```

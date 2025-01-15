@@ -146,7 +146,7 @@ class TTLock2MQTTClientGateway(TTLock2MQTTClient):
 
 class TTLock2MQTTClientLock(TTLock2MQTTClient):
 
-    def __init__(self, lock, gateway, ttlock, broker, port, broker_user, broker_pass, state_delay, battery_delay, keepalive):
+    def __init__(self, lock, gateway, ttlock, broker, port, broker_user, broker_pass, state_delay, short_delay, battery_delay, keepalive):
         self.lock = lock
         self.gateway = gateway
         self.mqttClientId = "LOCK-{}-{}".format(str(self.getLockId()), str(int(time.time())))
@@ -169,6 +169,7 @@ class TTLock2MQTTClientLock(TTLock2MQTTClient):
         self.lastStatePublishInfo = time.time()
         self.lastBatteryPublishInfo = time.time()
         self.state_delay = state_delay
+        self.short_delay = short_delay
         self.battery_delay = battery_delay
 
     def getName(self):
@@ -201,7 +202,7 @@ class TTLock2MQTTClientLock(TTLock2MQTTClient):
         time.sleep(3)
         self.forcePublishStateInfo()
         # I reduce the time to report status again...
-        self.lastStatePublishInfo = time.time() + self.state_delay - 15
+        self.lastStatePublishInfo = time.time() + self.state_delay - self.short_delay
 
     def publishInfos(self):
         if time.time()-self.lastStatePublishInfo > self.state_delay:
@@ -302,7 +303,7 @@ def create_futures(id,client):
         client_futures[id] = executor.submit(client_loop, client)
     time.sleep(DELAY_BETWEEN_NEW_THREADS_CREATION)
 
-def createClients(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, state_delay, battery_delay):
+def createClients(broker, port, broker_user, broker_pass, ttlock_client, ttlock_token, state_delay, short_delay, battery_delay):
     ttlock = TTLock(ttlock_client, ttlock_token)
     ttlock2MqttClient = None
     for gateway in ttlock.get_gateway_generator():
@@ -310,11 +311,11 @@ def createClients(broker, port, broker_user, broker_pass, ttlock_client, ttlock_
         create_futures(gateway.get(constants.GATEWAY_ID_FIELD),ttlock2MqttClient)
         for lock in ttlock.get_locks_per_gateway_generator(gateway.get(constants.GATEWAY_ID_FIELD)):
             ttlock2MqttClient = TTLock2MQTTClientLock(
-                    lock, gateway, ttlock, broker, port, broker_user, broker_pass, state_delay, battery_delay, DELAY_BETWEEN_LOCK_PUBLISH_INFOS*2)
+                    lock, gateway, ttlock, broker, port, broker_user, broker_pass, state_delay, short_delay, battery_delay, DELAY_BETWEEN_LOCK_PUBLISH_INFOS*2)
             create_futures(lock.get(constants.LOCK_ID_FIELD),ttlock2MqttClient)
 
 
-def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, ttlock_user, ttlock_hash, state_delay, battery_delay, max_threads):
+def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, ttlock_user, ttlock_hash, state_delay, short_delay, battery_delay, max_threads):
     try:
         global executor
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=max_threads)
@@ -334,7 +335,7 @@ def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, t
         while True:
             try:
                 createClients(broker, port, broker_user, broker_pass,
-                              ttlock_client, result_token, state_delay, battery_delay)
+                              ttlock_client, result_token, state_delay, short_delay, battery_delay)
                 logging.info("Current threads: {}".format(
                     threading.active_count()))
             except Exception:
@@ -364,16 +365,17 @@ if __name__ == '__main__':
     ttlock_user = None
     ttlock_hash = None
     state_delay = DELAY_BETWEEN_LOCK_PUBLISH_INFOS
+    short_delay = DELAY_BETWEEN_LOCK_PUBLISH_INFOS/4
     battery_delay = DELAY_BETWEEN_LOCK_PUBLISH_INFOS*5
     loglevel = 'INFO'
     max_threads= 200
     full_cmd_arguments = sys.argv
     argument_list = full_cmd_arguments[1:]
-    short_options = 'b:p:u:P:c:s:U:h:l:S:B:M'
+    short_options = 'b:p:u:P:c:s:U:h:l:S:D:B:M'
     long_options = ['broker=', 'port=', 'user=',
                     'Pass=', 'client=', 'secrete=',
                     'User_tt=', 'hash=', 'log_level=',
-                    'State_delay=','Battery_delay=',
+                    'State_delay=','Delta_delay=','Battery_delay=',
                     'Max_threads=']
     try:
         arguments, values = getopt.getopt(
@@ -404,6 +406,8 @@ if __name__ == '__main__':
             loglevel = current_value
         elif current_argument in ("-S", "--State_delay"):
             state_delay = int(current_value)
+        elif current_argument in ("-D", "--Delta_delay"):
+            short_delay = int(current_value)
         elif current_argument in ("-B", "--Battery_delay"):
             battery_delay = int(current_value)
         elif current_argument in ("-M", "--Max_threads"):
@@ -416,6 +420,6 @@ if __name__ == '__main__':
     logging.basicConfig(level=numeric_level, datefmt='%Y-%m-%d %H:%M:%S',
                         format='%(asctime)-15s - [%(levelname)s] TTLOCK2MQTT: %(message)s', )
 
-    logging.debug("Options: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(
-        ttlock_client, ttlock_secret, ttlock_user, ttlock_hash, broker, port, broker_user, broker_pass, loglevel, state_delay, battery_delay, max_threads))
-    main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, ttlock_user, ttlock_hash, state_delay ,battery_delay, max_threads)
+    logging.debug("Options: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(
+        ttlock_client, ttlock_secret, ttlock_user, ttlock_hash, broker, port, broker_user, broker_pass, loglevel, state_delay, short_delay, battery_delay, max_threads))
+    main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, ttlock_user, ttlock_hash, state_delay, short_delay, battery_delay, max_threads)
