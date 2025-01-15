@@ -28,9 +28,9 @@ ttlockclientid: YOUR_TTLOCK_CLOUD_API_CLIENT_ID
 ttlockclientsecret: YOUR_TTLOCK_CLOUD_CLIENT_SECRET
 ttlockuser: YOUR_TTLOCK_CLOUD_USER
 ttlockhash: YOUR_TTLOCK_CLOUD_HASH
-publishstatedelay: 60
-publishstatedelayshort: 15
-publishbatterydelay: 300
+publishstatedelay: 300
+publishstatedelayshort: 30
+publishbatterydelay: 3600
 loglevel: INFO
 maxthreads: 200
 ```
