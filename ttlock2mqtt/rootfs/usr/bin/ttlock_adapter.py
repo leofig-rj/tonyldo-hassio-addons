@@ -326,6 +326,9 @@ def main(broker, port, broker_user, broker_pass, ttlock_client, ttlock_secret, t
         if not ttlock_secret or not ttlock_user or not ttlock_hash:
             raise ValueError('Invalid ttlock user or hash.')
         
+        if short_delay >= state_delay:
+            raise ValueError('Invalid short_delay.')
+        
         result = TTLock.get_token(ttlock_client,ttlock_secret,ttlock_user,ttlock_hash,"",hashed_password=True)
         logging.debug(result)
         result_token = result["access_token"]
