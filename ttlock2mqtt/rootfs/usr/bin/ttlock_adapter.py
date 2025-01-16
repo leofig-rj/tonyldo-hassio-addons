@@ -202,7 +202,7 @@ class TTLock2MQTTClientLock(TTLock2MQTTClient):
         time.sleep(3)
         self.forcePublishStateInfo()
         # I reduce the time to report status again...
-        self.lastStatePublishInfo = time.time() + self.state_delay - self.short_delay
+        # self.lastStatePublishInfo = time.time() + self.state_delay - self.short_delay
 
     def publishInfos(self):
         if time.time()-self.lastStatePublishInfo > self.state_delay:

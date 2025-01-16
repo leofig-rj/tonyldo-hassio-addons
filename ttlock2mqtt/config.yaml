@@ -22,7 +22,7 @@ options:
   ttlockclientsecret: "TTLOCK CLOUD CLIENT SECRET"
   ttlockuser: "TTLOCK CLOUD USER"
   ttlockhash: "TTLOCK CLOUD HASH"
-  publishstatedelay: 300
+  publishstatedelay: 60
   publishstatedelayshort: 15
   publishbatterydelay: 3600
   loglevel: "INFO"
